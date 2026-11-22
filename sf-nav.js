@@ -72,8 +72,24 @@
     document.querySelectorAll('[data-sf-name]').forEach(function (el) { el.textContent = name; });
     document.querySelectorAll('[data-sf-role]').forEach(function (el) { el.textContent = roles.join(' · '); });
     document.querySelectorAll('[data-sf-super]').forEach(function (el) { el.hidden = !isSuper; });
+    SFNav.setPhoto(user.avatar_url);
     SFNav._isSuper = !!isSuper;
     SFNav.setServerStatus(SFNav._status || 'active');
+  };
+
+  // Profile photo over the initials (url null = initials only).
+  SFNav.setPhoto = function (url) {
+    document.querySelectorAll('.sf-avatar').forEach(function (btn) {
+      var img = btn.querySelector('.sf-avatar-img');
+      if (!url) { if (img) img.remove(); return; }
+      if (!img) {
+        img = document.createElement('img');
+        img.className = 'sf-avatar-img'; img.alt = '';
+        img.onerror = function () { img.remove(); };
+        btn.insertBefore(img, btn.firstChild);
+      }
+      if (img.getAttribute('src') !== url) img.src = url;
+    });
   };
 
   SFNav.setInvites = function (n) {

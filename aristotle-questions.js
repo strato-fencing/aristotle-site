@@ -238,7 +238,7 @@
       return r.json();
     }).then(function (u) {
       SFNav.setAuth(true);
-      SFNav.setUser({ first_name: u.first_name, last_name: u.last_name, username: u.username, email: u.email }, !!u.is_super_user);
+      SFNav.setUser({ first_name: u.first_name, last_name: u.last_name, username: u.username, email: u.email, avatar_url: u.avatar_url ? XEN + u.avatar_url : null }, !!u.is_super_user);
     }).catch(function (err) { if (err.status === 401 || err.status === 403) SFNav.setAuth(false); });
   }
   function logout() {
