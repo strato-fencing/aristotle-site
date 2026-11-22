@@ -85,7 +85,7 @@ nav {
   transition: color 0.2s, border-color 0.2s;
 }
 .hero-signin:hover { color: var(--white); border-color: var(--accent); }
-.hero-inner { max-width: 1200px; }
+.hero-inner { max-width: 1200px; margin: 0 auto; }
 .hero-eyebrow {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.8rem;
