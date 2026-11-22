@@ -20,15 +20,6 @@
   })();
   </script>
   <style>
-    .c-bar {
-      display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1.2rem;
-      border-bottom: 1px solid var(--light); padding-bottom: 0.8rem; margin-bottom: 2rem;
-      font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase;
-    }
-    .c-bar a { color: var(--muted); text-decoration: none; padding: 0.3rem 0; border-bottom: 3px solid transparent; }
-    .c-bar a.active, .c-bar a:hover { color: var(--accent); border-bottom-color: var(--accent); }
-    .c-bar .who { margin-left: auto; color: var(--muted); font-weight: 400; letter-spacing: 0.05em; text-transform: none; font-family: 'Barlow', sans-serif; }
 
     .form { max-width: 420px; }
     .form label { display: block; font-weight: 500; margin: 1rem 0 0.3rem; }
@@ -147,6 +138,7 @@
         <div class="sf-menu" id="ari-menu" hidden>
           <div class="sf-menu-who"><strong data-sf-name></strong><span>Logged in with your Strato Fencing account</span></div>
           <a href="discussion.html#/account">Account</a>
+          <a href="discussion.html#/admin" data-sf-super hidden>Admin</a>
           <div class="sf-menu-sep"><button type="button" data-sf-logout>Log out</button></div>
         </div>
       </div>
@@ -158,7 +150,6 @@
 <section id="survey">
   <div class="survey-inner">
     <div class="section-label">Aristotle Discussion</div>
-    <div id="c-bar"></div>
     <div id="view"></div>
   </div>
 </section>
@@ -236,19 +227,8 @@
   }
   function questionnaireHref() { return 'index.html' + esc(location.search); }
 
-  function renderBar(active) {
-    var bar = document.getElementById('c-bar');
-    if (!me) { bar.innerHTML = ''; return; }
-    var links = [['results', 'Answers & Discussion'], ['account', 'Account']];
-    if (me.is_admin) links.push(['admin', 'Admin']);
-    bar.innerHTML = '<div class="c-bar">' + links.map(function (l) {
-      return '<a href="#/' + l[0] + '"' + (active === l[0] ? ' class="active"' : '') + '>' + l[1] + '</a>';
-    }).join('') + '<span class="who">Logged in as <strong>' + esc(me.username) + '</strong></span></div>';
-  }
-
   // ── Sign in / create account ──
   function renderLogin(mode, notice, email) {
-    renderBar(null);
     var reg = mode === 'register';
     view(
       '<h2 class="section-title">' + (reg ? 'Create account' : 'Log in') + '</h2><div class="section-rule"></div>' +
@@ -340,7 +320,6 @@
   }
 
   function renderLoggedOut() {
-    renderBar(null);
     view('<h2 class="section-title">Discussion</h2><div class="section-rule"></div>' +
       '<p class="body-text">Log in to read other fencers\' answers and join the discussion on each question.</p>' +
       '<div class="q-nav"><a class="btn primary" style="text-decoration:none" href="#/login">Log in</a>' +
@@ -426,7 +405,6 @@
   }
 
   function renderResults() {
-    renderBar('results');
     if (!me.has_access) {
       view('<h2 class="section-title">Take the Questionnaire First</h2><div class="section-rule"></div>' +
         '<p class="body-text">To keep everyone\'s answers independent, other fencers\' answers are only shown once you have submitted the questionnaire yourself.</p>' +
@@ -591,7 +569,6 @@
 
   // ── Account ──
   function renderAccount() {
-    renderBar('account');
     view('<h2 class="section-title">Your Account</h2><div class="section-rule"></div>' +
       '<div class="form"><form id="acct-form">' +
       '<label for="f-username">Username</label><input class="q-input" id="f-username" maxlength="30" value="' + esc(me.username || '') + '" />' +
@@ -622,7 +599,6 @@
         me.username = r.username;
         me.email = r.email;
         results = null;  // comment author names changed
-        renderBar('account');
         emailEl.value = r.email;
         pwEl.value = '';
         document.getElementById('pw-wrap').hidden = true;
@@ -633,7 +609,6 @@
 
   // ── Admin (super user) ──
   function renderAdmin(tab) {
-    renderBar('admin');
     if (!me.is_admin) { location.hash = '#/results'; return; }
     tab = tab === 'accounts' ? 'accounts' : 'answers';
     var h = '<h2 class="section-title">Admin</h2><div class="section-rule"></div>' +
