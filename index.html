@@ -26,7 +26,7 @@
   <div class="sf-bar">
     <a class="sf-brand" href="index.html" aria-label="Aristotle home"><span class="sf-wordmark"><span class="sf-eyebrow">Strato Fencing</span><span class="sf-name">Aristotle</span></span></a>
     <div class="sf-links">
-      <nav class="sf-nav" aria-label="Aristotle"><a href="index.html" aria-current="page">Questionnaire</a><a href="discussion.html">Discussion</a><a class="sf-drawer-only auth-out" href="discussion.html#/login">Log in</a></nav>
+      <nav class="sf-nav" aria-label="Aristotle"><a href="index.html" aria-current="page">Questionnaire</a><a href="discussion.html">Community</a><a class="sf-drawer-only auth-out" href="discussion.html#/login">Log in</a></nav>
       <div class="sf-ext"><span class="sf-drawer-label">More from Strato Fencing</span><a href="https://stratofencing.com/">Strato Fencing ↗</a><a href="https://xenophon.stratofencing.com/">Xenophon ↗</a></div>
     </div>
     <div class="sf-right">
@@ -680,7 +680,7 @@
       if (!r.ok) return;
       var cta = document.getElementById('ari-cta');
       if (cta) cta.innerHTML = '<div><h2>Your answers are linked to your account</h2><p>See how other fencers answered.</p></div>' +
-        '<div class="ari-cta-btns"><a class="sf-btn sf-btn-primary" href="discussion.html' + esc(location.search) + '#/results">Go to Discussion</a></div>';
+        '<div class="ari-cta-btns"><a class="sf-btn sf-btn-primary" href="discussion.html' + esc(location.search) + '#/results">Go to Community</a></div>';
     }).catch(function () {});
   }
 
